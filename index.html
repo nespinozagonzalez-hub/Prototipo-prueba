@@ -3,132 +3,999 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prototipo videos</title>
+  <title>Catálogo de actividades HTML para cursos</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111827;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+    :root{
+      --bg:#0f172a;
+      --panel:#111827;
+      --panel-2:#1f2937;
+      --soft:#334155;
+      --text:#e5eefc;
+      --muted:#a7b7d6;
+      --accent:#7dd3fc;
+      --accent-2:#c084fc;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --bad:#f87171;
+      --shadow:0 14px 40px rgba(0,0,0,.28);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background: radial-gradient(circle at top, #172554 0%, #0f172a 45%, #020617 100%);
+      color:var(--text);
+      line-height:1.45;
+    }
+    .hero{
+      padding:48px 24px 26px;
+      max-width:1280px;
+      margin:0 auto;
+    }
+    .hero-box{
+      background:linear-gradient(135deg, rgba(125,211,252,.18), rgba(192,132,252,.14));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    h1,h2,h3{margin:0 0 10px}
+    h1{font-size:clamp(2rem,4vw,3.3rem)}
+    h2{font-size:1.55rem}
+    h3{font-size:1.05rem}
+    p{margin:0 0 12px;color:var(--muted)}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .chip{
+      border:1px solid rgba(255,255,255,.15);
+      padding:8px 12px;
+      border-radius:999px;
+      color:#dbeafe;
+      background:rgba(255,255,255,.06);
+      font-size:.92rem;
+    }
+    .layout{
+      max-width:1280px;
+      margin:0 auto;
+      padding:0 24px 50px;
+      display:grid;
+      grid-template-columns:290px 1fr;
+      gap:22px;
+      align-items:start;
+    }
+    .side{
+      position:sticky;
+      top:18px;
+      background:rgba(17,24,39,.86);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .side h3{margin-bottom:14px}
+    .side a{
+      display:block;
+      text-decoration:none;
+      color:#dbeafe;
+      background:rgba(255,255,255,.03);
+      border:1px solid transparent;
+      padding:10px 12px;
+      border-radius:14px;
+      margin-bottom:8px;
+      transition:.2s;
+      font-size:.95rem;
+    }
+    .side a:hover{background:rgba(125,211,252,.12);border-color:rgba(125,211,252,.25);transform:translateX(4px)}
+    .content{display:grid;gap:20px}
+    .card{
+      background:rgba(17,24,39,.88);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .meta{
+      display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px;
+    }
+    .tag{
+      font-size:.78rem;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      color:#e0f2fe;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .demo{
+      margin-top:12px;
+      padding:18px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .btn,.small-btn, button{
+      border:none;
+      border-radius:14px;
+      padding:10px 14px;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#081120;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+      margin:6px 6px 0 0;
+    }
+    button:hover,.btn:hover,.small-btn:hover{transform:translateY(-1px);filter:brightness(1.06)}
+    .ghost{
+      background:rgba(255,255,255,.06);
+      color:#e5eefc;
+      border:1px solid rgba(255,255,255,.12);
+    }
+    input, select, textarea{
+      width:100%;
+      margin:8px 0 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:#0b1220;
+      color:var(--text);
+      padding:11px 12px;
+      font:inherit;
+    }
+    .feedback{font-weight:700; margin-top:8px}
+    .good{color:var(--good)}
+    .bad{color:var(--bad)}
+    .warn{color:var(--warn)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .options label, .checks label{display:block;padding:10px 12px;background:rgba(255,255,255,.04);border-radius:12px;margin:8px 0;cursor:pointer;border:1px solid rgba(255,255,255,.06)}
+    .memory-grid{display:grid;grid-template-columns:repeat(4, minmax(62px,1fr));gap:10px;max-width:420px}
+    .memory-card{
+      height:72px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, #312e81, #0f766e); cursor:pointer; font-size:1.7rem; user-select:none;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .memory-card.flipped,.memory-card.matched{background:rgba(255,255,255,.09)}
+    .flashcard{
+      min-height:120px; display:flex; align-items:center; justify-content:center; text-align:center;
+      border-radius:20px; padding:18px; background:linear-gradient(135deg, rgba(14,165,233,.18), rgba(168,85,247,.15));
+      border:1px solid rgba(255,255,255,.08); font-size:1.15rem; font-weight:700;
+    }
+    .match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin-bottom:10px}
+    .order-list{list-style:none;padding:0;margin:12px 0;display:grid;gap:10px;max-width:520px}
+    .order-item{background:rgba(255,255,255,.05);padding:12px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,.08)}
+    .drag-area{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .draggables,.dropzones{display:grid;gap:10px}
+    .drag-item,.dropzone{padding:14px;border-radius:16px;border:1px dashed rgba(255,255,255,.25);background:rgba(255,255,255,.04)}
+    .drag-item{cursor:grab;border-style:solid}
+    .dropzone.over{outline:2px solid var(--accent)}
+    .wordsearch{display:grid;grid-template-columns:repeat(8, 34px);gap:4px;justify-content:start;margin:12px 0}
+    .cell{
+      width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;
+      font-weight:800;cursor:pointer;user-select:none;border:1px solid rgba(255,255,255,.05)
+    }
+    .cell.selected{background:rgba(125,211,252,.28)}
+    .cell.found{background:rgba(52,211,153,.28)}
+    .crossword{display:grid;grid-template-columns:repeat(5, 42px);gap:4px;justify-content:start;margin:12px 0}
+    .crossword input{width:42px;height:42px;margin:0;padding:0;text-align:center;font-weight:800;text-transform:uppercase;border-radius:10px}
+    .cross-black{width:42px;height:42px;border-radius:10px;background:#020617}
+    .likert-row{display:grid;grid-template-columns:1.6fr repeat(5,60px);gap:8px;align-items:center;margin:10px 0}
+    .likert-row div,.likert-row label{text-align:center}
+    .scenario-box{padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);min-height:120px}
+    .roulette{
+      width:160px;height:160px;border-radius:50%;margin:12px auto;border:10px solid rgba(255,255,255,.1);
+      display:flex;align-items:center;justify-content:center;font-weight:900;text-align:center;padding:20px;
+      background:conic-gradient(#38bdf8 0 25%, #a855f7 25% 50%, #34d399 50% 75%, #fbbf24 75% 100%);
+      color:#0b1020;
+    }
+    .code-box{display:flex;gap:10px;max-width:360px}
+    .code-box input{text-align:center;font-size:1.2rem;letter-spacing:.25em}
+    .summary-box{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px
+    }
+    .mini{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:16px
+    }
+    .footer-note{
+      margin:30px auto 50px; max-width:1280px; padding:0 24px; color:#cbd5e1;
     }
 
-    .pantalla {
-      width: 90%;
-      max-width: 900px;
-      background: rgba(255,255,255,0.08);
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      display: none;
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:14px}
+    .resource-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:18px}
+    .preview-frame{width:100%;height:280px;border:none;border-radius:16px;background:#0b1220}
+    .preview-image{width:100%;max-height:320px;object-fit:contain;border-radius:16px;background:#0b1220;border:1px solid rgba(255,255,255,.08)}
+    .tiny-note{font-size:.9rem;color:#cbd5e1;margin-top:8px}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.82);display:none;align-items:center;justify-content:center;padding:22px;z-index:9999}
+    .modal-backdrop.active{display:flex}
+    .modal-window{width:min(1100px,100%);height:min(85vh,820px);background:#0b1220;border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
+    .modal-title{font-weight:800;color:#fff}
+    .modal-content{flex:1;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01))}
+    .modal-content iframe,.modal-content img{width:100%;height:100%;border:none;border-radius:16px;background:#020617;object-fit:contain}
+
+    @media (max-width:980px){
+      .layout{grid-template-columns:1fr}
+      .side{position:relative;top:0}
+      .grid-2,.drag-area{grid-template-columns:1fr}
     }
-
-    .activa { display: block; }
-
-    button {
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      background: #f59e0b;
+    @media (max-width:620px){
+      .wordsearch{grid-template-columns:repeat(8, 28px)}
+      .cell{width:28px;height:28px;font-size:.88rem}
+      .crossword{grid-template-columns:repeat(5, 34px)}
+      .crossword input,.cross-black{width:34px;height:34px}
+      .memory-grid{grid-template-columns:repeat(4,1fr)}
+      .memory-card{height:60px}
+      .likert-row{grid-template-columns:1fr repeat(5,42px);font-size:.85rem}
     }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal.activo { display: flex; }
-
-    .contenido {
-      width: 90%;
-      max-width: 800px;
-      background: #000;
-      padding: 20px;
-      border-radius: 12px;
-      position: relative;
-    }
-
-    iframe {
-      width: 100%;
-      height: 400px;
-      border: none;
-    }
-
-    .cerrar {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: red;
-      color: white;
-      padding: 8px;
-      border-radius: 8px;
-    }
-
-    a { color: #38bdf8; }
   </style>
 </head>
 <body>
+  <header class="hero">
+    <div class="hero-box">
+      <h1>Catálogo interactivo de actividades HTML para cursos</h1>
+      <p>Este archivo reúne miniejemplos funcionales de actividades lúdicas y tipos de test que sí pueden construirse en HTML, CSS y JavaScript para usar en cursos, cápsulas, sitios, plataformas o prototipos embebibles.</p>
+      <p>La temática de ejemplo será <strong style="color:#fff">mamíferos y animales</strong>, pero la lógica puede cambiarse a cualquier asignatura: ciencias, historia, idiomas, matemáticas o formación ciudadana.</p>
+      <div class="chips">
+        <span class="chip">Selección múltiple</span>
+        <span class="chip">Verdadero/Falso</span>
+        <span class="chip">Checkbox</span>
+        <span class="chip">Respuesta corta</span>
+        <span class="chip">Completar</span>
+        <span class="chip">Likert</span>
+        <span class="chip">Flashcards</span>
+        <span class="chip">Memory</span>
+        <span class="chip">Ahorcado</span>
+        <span class="chip">Emparejar</span>
+        <span class="chip">Ordenar</span>
+        <span class="chip">Arrastrar y soltar</span>
+        <span class="chip">Sopa de letras</span>
+        <span class="chip">Crucigrama</span>
+        <span class="chip">Ruleta</span>
+        <span class="chip">Narrativa ramificada</span>
+        <span class="chip">Candado / escape room</span>
+      </div>
+    </div>
+  </header>
 
-<div id="inicio" class="pantalla activa">
-  <h1>Prototipo</h1>
-  <button onclick="cambiar('videos')">Avanzar</button>
-</div>
+  <main class="layout">
+    <aside class="side">
+      <h3>Explorar ejemplos</h3>
+      <a href="#mcq">1. Selección múltiple</a>
+      <a href="#vf">2. Verdadero / Falso</a>
+      <a href="#checkbox">3. Respuesta múltiple</a>
+      <a href="#fill">4. Completar espacio</a>
+      <a href="#short">5. Respuesta corta</a>
+      <a href="#likert">6. Escala Likert</a>
+      <a href="#flashcards">7. Flashcards</a>
+      <a href="#memory">8. Memorice</a>
+      <a href="#hangman">9. Ahorcado</a>
+      <a href="#matching">10. Emparejamiento</a>
+      <a href="#ordering">11. Secuenciación</a>
+      <a href="#dragdrop">12. Arrastrar y soltar</a>
+      <a href="#wordsearch">13. Sopa de letras</a>
+      <a href="#crossword">14. Crucigrama</a>
+      <a href="#roulette">15. Ruleta</a>
+      <a href="#scenario">16. Narrativa ramificada</a>
+      <a href="#lock">17. Candado / código</a>
+      <a href="#embeds">18. Recursos embebidos</a>
+    </aside>
 
-<div id="videos" class="pantalla">
-  <h2>Veremos algunos videos</h2>
-  <button onclick="abrir(1)">Video 1</button>
-  <button onclick="abrir(2)">Video 2</button>
-</div>
+    <section class="content">
+      <article class="card" id="mcq">
+        <h2>1. Quiz de selección múltiple</h2>
+        <div class="meta"><span class="tag">Test clásico</span><span class="tag">Autocorrección</span><span class="tag">Muy útil en cursos</span></div>
+        <p>Perfecto para diagnósticos, controles de lectura, tickets de salida y evaluaciones gamificadas con retroalimentación inmediata.</p>
+        <div class="demo">
+          <h3>¿Cuál de estos animales es un mamífero marino?</h3>
+          <div class="options" id="mcqOptions">
+            <label><input type="radio" name="mcq" value="pez"> Tiburón</label>
+            <label><input type="radio" name="mcq" value="mamifero"> Delfín</label>
+            <label><input type="radio" name="mcq" value="ave"> Pingüino</label>
+          </div>
+          <button onclick="checkMcq()">Revisar</button>
+          <div id="mcqFeedback" class="feedback"></div>
+        </div>
+      </article>
 
-<div id="modal" class="modal">
-  <div class="contenido">
-    <button class="cerrar" onclick="cerrar()">Cerrar</button>
-    <iframe id="frame" src=""></iframe>
-    <p>
-      Si no funciona:
-      <a id="linkYT" href="#" target="_blank">Ver en YouTube</a>
-    </p>
+      <article class="card" id="vf">
+        <h2>2. Verdadero / Falso</h2>
+        <div class="meta"><span class="tag">Rápido</span><span class="tag">Repaso</span><span class="tag">Diagnóstico</span></div>
+        <p>Funciona muy bien para activar conocimientos previos o comprobar ideas erróneas en poco tiempo.</p>
+        <div class="demo">
+          <h3>“Los murciélagos son mamíferos”.</h3>
+          <button onclick="checkVF(true)">Verdadero</button>
+          <button class="ghost" onclick="checkVF(false)">Falso</button>
+          <div id="vfFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="checkbox">
+        <h2>3. Respuesta múltiple con checkbox</h2>
+        <div class="meta"><span class="tag">Más de una respuesta</span><span class="tag">Pensamiento fino</span></div>
+        <p>Ideal cuando quieres que el estudiante identifique varias características correctas en vez de adivinar una sola.</p>
+        <div class="demo">
+          <h3>Selecciona todas las características propias de los mamíferos:</h3>
+          <div class="checks">
+            <label><input type="checkbox" value="pelaje"> Tienen pelo o pelaje</label>
+            <label><input type="checkbox" value="leche"> Producen leche para sus crías</label>
+            <label><input type="checkbox" value="branquias"> Respiran por branquias toda su vida</label>
+            <label><input type="checkbox" value="sangre"> Son de sangre caliente</label>
+          </div>
+          <button onclick="checkCheckbox()">Comprobar</button>
+          <div id="checkboxFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="fill">
+        <h2>4. Completar espacio</h2>
+        <div class="meta"><span class="tag">Cloze</span><span class="tag">Vocabulario</span><span class="tag">Conceptos clave</span></div>
+        <p>Muy útil para conceptos, definiciones, fórmulas, fechas o palabras clave.</p>
+        <div class="demo">
+          <h3>Completa la frase:</h3>
+          <p>Los mamíferos alimentan a sus crías con ________.</p>
+          <input id="fillInput" placeholder="Escribe una palabra" />
+          <button onclick="checkFill()">Revisar</button>
+          <div id="fillFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="short">
+        <h2>5. Respuesta corta autocorregida</h2>
+        <div class="meta"><span class="tag">Respuesta breve</span><span class="tag">Flexible</span></div>
+        <p>Permite respuestas abiertas, pero con validación sencilla por palabras clave. Muy útil para nombres, conceptos puntuales o traducciones.</p>
+        <div class="demo">
+          <h3>Escribe el nombre del mamífero más grande del planeta.</h3>
+          <input id="shortInput" placeholder="Tu respuesta" />
+          <button onclick="checkShort()">Corregir</button>
+          <div id="shortFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="likert">
+        <h2>6. Escala Likert / autoevaluación</h2>
+        <div class="meta"><span class="tag">Percepción</span><span class="tag">Metacognición</span><span class="tag">Encuestas</span></div>
+        <p>Sirve para encuestas de salida, percepción de logro, autoevaluación, satisfacción con el módulo o reflexión posterior a una actividad.</p>
+        <div class="demo">
+          <div class="likert-row"><div></div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div></div>
+          <div class="likert-row">
+            <div>Entendí las características de los mamíferos.</div>
+            <label><input type="radio" name="l1" value="1"></label>
+            <label><input type="radio" name="l1" value="2"></label>
+            <label><input type="radio" name="l1" value="3"></label>
+            <label><input type="radio" name="l1" value="4"></label>
+            <label><input type="radio" name="l1" value="5"></label>
+          </div>
+          <div class="likert-row">
+            <div>Podría explicar este tema a otra persona.</div>
+            <label><input type="radio" name="l2" value="1"></label>
+            <label><input type="radio" name="l2" value="2"></label>
+            <label><input type="radio" name="l2" value="3"></label>
+            <label><input type="radio" name="l2" value="4"></label>
+            <label><input type="radio" name="l2" value="5"></label>
+          </div>
+          <button onclick="checkLikert()">Ver promedio</button>
+          <div id="likertFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="flashcards">
+        <h2>7. Flashcards</h2>
+        <div class="meta"><span class="tag">Memorización</span><span class="tag">Repaso</span><span class="tag">Lenguaje / ciencias</span></div>
+        <p>Excelente para conceptos, vocabulario, autores, fechas, estructuras celulares o pares pregunta-respuesta.</p>
+        <div class="demo">
+          <div id="flashcard" class="flashcard">Haz clic para girar la tarjeta</div>
+          <button onclick="flipFlashcard()">Girar tarjeta</button>
+          <button class="ghost" onclick="nextFlashcard()">Siguiente</button>
+        </div>
+      </article>
+
+      <article class="card" id="memory">
+        <h2>8. Memorice / memory game</h2>
+        <div class="meta"><span class="tag">Lúdico</span><span class="tag">Atención</span><span class="tag">Asociación</span></div>
+        <p>Muy útil para vocabulario, parejas concepto-definición, imagen-palabra, símbolo-función o clasificación.</p>
+        <div class="demo">
+          <div class="memory-grid" id="memoryGrid"></div>
+          <button onclick="resetMemory()">Reiniciar memorice</button>
+          <div id="memoryFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="hangman">
+        <h2>9. Ahorcado</h2>
+        <div class="meta"><span class="tag">Vocabulario</span><span class="tag">Gamificado</span><span class="tag">Simple y efectivo</span></div>
+        <p>Funciona muy bien para palabras clave, conceptos, nombres científicos o terminología en inglés.</p>
+        <div class="demo">
+          <h3 id="hangmanWord"></h3>
+          <p>Intentos restantes: <span id="hangmanLives"></span></p>
+          <input id="hangmanInput" maxlength="1" placeholder="Letra" />
+          <button onclick="guessLetter()">Probar letra</button>
+          <button class="ghost" onclick="resetHangman()">Reiniciar</button>
+          <div id="hangmanUsed"></div>
+          <div id="hangmanFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="matching">
+        <h2>10. Emparejamiento</h2>
+        <div class="meta"><span class="tag">Relacionar conceptos</span><span class="tag">Muy adaptable</span></div>
+        <p>Sirve para unir conceptos con definiciones, personajes con hechos, órganos con funciones o autores con teorías.</p>
+        <div class="demo">
+          <div class="match-row">
+            <div>Delfín</div>
+            <select data-answer="acuatico">
+              <option value="">Selecciona...</option>
+              <option value="terrestre">Mamífero terrestre</option>
+              <option value="volador">Mamífero volador</option>
+              <option value="acuatico">Mamífero acuático</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <div>Murciélago</div>
+            <select data-answer="volador">
+              <option value="">Selecciona...</option>
+              <option value="terrestre">Mamífero terrestre</option>
+              <option value="volador">Mamífero volador</option>
+              <option value="acuatico">Mamífero acuático</option>
+            </select>
+          </div>
+          <div class="match-row">
+            <div>Elefante</div>
+            <select data-answer="terrestre">
+              <option value="">Selecciona...</option>
+              <option value="terrestre">Mamífero terrestre</option>
+              <option value="volador">Mamífero volador</option>
+              <option value="acuatico">Mamífero acuático</option>
+            </select>
+          </div>
+          <button onclick="checkMatching()">Comprobar parejas</button>
+          <div id="matchingFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="ordering">
+        <h2>11. Ordenar / secuenciar</h2>
+        <div class="meta"><span class="tag">Procesos</span><span class="tag">Cronologías</span><span class="tag">Pasos</span></div>
+        <p>Ideal para ordenar etapas, procedimientos, experimentos, eventos históricos o instrucciones.</p>
+        <div class="demo">
+          <p>Ordena esta secuencia del crecimiento de una cría:</p>
+          <ul class="order-list" id="orderList"></ul>
+          <button onclick="checkOrder()">Revisar orden</button>
+          <button class="ghost" onclick="shuffleOrder()">Mezclar</button>
+          <div id="orderFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="dragdrop">
+        <h2>12. Arrastrar y soltar</h2>
+        <div class="meta"><span class="tag">Clasificación</span><span class="tag">Muy visual</span></div>
+        <p>Muy potente para clasificar, agrupar, ordenar ideas, relacionar imágenes con conceptos o construir mapas conceptuales simples.</p>
+        <div class="demo drag-area">
+          <div class="draggables">
+            <div class="drag-item" draggable="true" data-type="mamifero">Ballena</div>
+            <div class="drag-item" draggable="true" data-type="no-mamifero">Tortuga</div>
+            <div class="drag-item" draggable="true" data-type="mamifero">Perro</div>
+            <div class="drag-item" draggable="true" data-type="no-mamifero">Salmón</div>
+          </div>
+          <div class="dropzones">
+            <div class="dropzone" data-accept="mamifero"><strong>Mamíferos</strong><div class="dropped"></div></div>
+            <div class="dropzone" data-accept="no-mamifero"><strong>No mamíferos</strong><div class="dropped"></div></div>
+          </div>
+        </div>
+        <div class="demo" style="margin-top:12px">
+          <button onclick="checkDragDrop()">Revisar clasificación</button>
+          <button class="ghost" onclick="resetDragDrop()">Reiniciar</button>
+          <div id="dragDropFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="wordsearch">
+        <h2>13. Sopa de letras</h2>
+        <div class="meta"><span class="tag">Clásico lúdico</span><span class="tag">Muy solicitado</span></div>
+        <p>Se puede hacer en HTML de forma básica o avanzada. Aquí tienes una versión pequeña donde debes encontrar tres palabras ocultas haciendo clic en sus letras.</p>
+        <div class="demo">
+          <p>Palabras ocultas: <strong>OSO</strong>, <strong>GATO</strong>, <strong>FOCA</strong></p>
+          <div class="wordsearch" id="wordsearchGrid"></div>
+          <button onclick="submitWordSelection()">Validar selección</button>
+          <button class="ghost" onclick="clearWordSelection()">Limpiar selección</button>
+          <div id="wordsearchFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="crossword">
+        <h2>14. Crucigrama</h2>
+        <div class="meta"><span class="tag">Vocabulario</span><span class="tag">Comprensión</span></div>
+        <p>Perfecto para reforzar conceptos clave. Este miniejemplo incluye una mini cuadrícula verificable.</p>
+        <div class="demo">
+          <p><strong>Pistas:</strong> 1) Animal doméstico mamífero que maúlla. 2) Mamífero marino que descansa en rocas y playas.</p>
+          <div class="crossword" id="crosswordGrid">
+            <input maxlength="1" data-key="g1"><input maxlength="1" data-key="g2"><input maxlength="1" data-key="g3"><input maxlength="1" data-key="g4"><div class="cross-black"></div>
+            <div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div>
+            <input maxlength="1" data-key="f1"><input maxlength="1" data-key="f2"><input maxlength="1" data-key="f3"><input maxlength="1" data-key="f4"><div class="cross-black"></div>
+            <div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div>
+            <div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div><div class="cross-black"></div>
+          </div>
+          <button onclick="checkCrossword()">Revisar crucigrama</button>
+          <div id="crosswordFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="roulette">
+        <h2>15. Ruleta de preguntas o retos</h2>
+        <div class="meta"><span class="tag">Azar</span><span class="tag">Dinamiza clase</span><span class="tag">Rompe rutina</span></div>
+        <p>Muy útil para preguntas sorpresa, retos, turnos, comodines, bonus o estaciones de trabajo.</p>
+        <div class="demo" style="text-align:center">
+          <div class="roulette" id="rouletteWheel">Gira</div>
+          <button onclick="spinRoulette()">Girar ruleta</button>
+          <div id="rouletteFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="scenario">
+        <h2>16. Narrativa ramificada / toma de decisiones</h2>
+        <div class="meta"><span class="tag">Escape room</span><span class="tag">ABJ</span><span class="tag">Simulación</span></div>
+        <p>Aquí es donde HTML brilla muchísimo: decisiones, rutas bloqueadas, consecuencias, pistas y narrativa interactiva.</p>
+        <div class="demo">
+          <div class="scenario-box" id="scenarioText">Eres explorador/a. Encuentras huellas cerca de un río. ¿Qué haces primero?</div>
+          <div id="scenarioChoices">
+            <button onclick="chooseScenario('water')">Buscar si el animal vive en el agua</button>
+            <button class="ghost" onclick="chooseScenario('fur')">Examinar si dejó pelo o pelaje</button>
+          </div>
+          <div id="scenarioFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+      <article class="card" id="lock">
+        <h2>17. Candado / código secreto</h2>
+        <div class="meta"><span class="tag">Escape room</span><span class="tag">Desbloqueo</span><span class="tag">Muy motivante</span></div>
+        <p>Sirve para desbloquear módulos, pistas, recursos, insignias, videos o nuevas rutas. En una experiencia gamificada queda espectacular.</p>
+        <div class="demo">
+          <p>Pista: mamífero marino inteligente + animal con trompa + felino doméstico = iniciales</p>
+          <div class="code-box"><input id="lockInput" maxlength="3" placeholder="Ej: ABC"></div>
+          <button onclick="checkLock()">Desbloquear</button>
+          <div id="lockFeedback" class="feedback"></div>
+        </div>
+      </article>
+
+
+      <article class="card" id="embeds">
+        <h2>18. Prueba de recursos embebidos: Drive, video e imagen</h2>
+        <div class="meta"><span class="tag">Drive</span><span class="tag">YouTube</span><span class="tag">Ventanas emergentes</span></div>
+        <p>Esta sección prueba algo muy útil para un curso HTML unificado: incrustar documentos, videos e imágenes dentro del mismo entorno, sin obligar al estudiante a salir del recurso principal. Aquí dejé tanto la vista directa como botones para abrir cada elemento en una ventana emergente interna.</p>
+        <div class="demo">
+          <div class="resource-grid">
+            <div class="resource-box">
+              <h3>Documento de Google Drive</h3>
+              <iframe class="preview-frame" src="https://drive.google.com/file/d/1LSQ3Q7nwWl4gy_m8fkP-aMzE7dWW54JR/preview" allow="autoplay"></iframe>
+              <button onclick="openResourceModal('Documento de Drive','iframe','https://drive.google.com/file/d/1LSQ3Q7nwWl4gy_m8fkP-aMzE7dWW54JR/preview')">Abrir en ventana</button>
+              <a class="btn ghost" href="https://drive.google.com/file/d/1LSQ3Q7nwWl4gy_m8fkP-aMzE7dWW54JR/view?usp=sharing" target="_blank" rel="noopener noreferrer">Abrir directo</a>
+              <div class="tiny-note">Si no se ve, normalmente el problema es el permiso de compartición del archivo en Drive.</div>
+            </div>
+            <div class="resource-box">
+              <h3>Video de YouTube</h3>
+              <iframe class="preview-frame" src="https://www.youtube.com/embed/UYTLcLYvGzY" title="Video embebido" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <button onclick="openResourceModal('Video de YouTube','iframe','https://www.youtube.com/embed/UYTLcLYvGzY')">Abrir en ventana</button>
+              <a class="btn ghost" href="https://www.youtube.com/watch?v=UYTLcLYvGzY" target="_blank" rel="noopener noreferrer">Ver en YouTube</a>
+              <div class="tiny-note">YouTube suele funcionar muy bien embebido, sobre todo cuando el HTML está alojado online.</div>
+            </div>
+            <div class="resource-box">
+              <h3>Imagen desde Google Drive</h3>
+              <img class="preview-image" src="https://drive.google.com/uc?export=view&id=1m632Q3xbGpRHFT5LKmF5bruVdH1btmpE" alt="Imagen de prueba desde Drive">
+              <button onclick="openResourceModal('Imagen desde Drive','image','https://drive.google.com/uc?export=view&id=1m632Q3xbGpRHFT5LKmF5bruVdH1btmpE')">Abrir en ventana</button>
+              <a class="btn ghost" href="https://drive.google.com/file/d/1m632Q3xbGpRHFT5LKmF5bruVdH1btmpE/view?usp=sharing" target="_blank" rel="noopener noreferrer">Abrir directo</a>
+              <div class="tiny-note">Para imágenes de Drive conviene usar una URL directa de visualización para que el navegador la pinte correctamente.</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>¿Qué más se puede hacer en HTML además de esto?</h2>
+        <p>Muchísimo más. Estos son solo ejemplos pequeños. Un curso en HTML también puede incluir mapas interactivos, barras de progreso, avatares, sistemas de puntos, badges, formularios de misión, temporizadores, pistas ocultas, videos emergentes, tableros de avance, laboratorios simulados, salas con puertas bloqueadas, cómics interactivos, generadores de preguntas aleatorias, escape rooms completos, visual novels, pruebas adaptativas y recorridos no lineales.</p>
+        <div class="summary-box">
+          <div class="mini"><strong>Muy fácil de hacer:</strong><br>Quiz, V/F, completar, respuesta corta, flashcards, memorice.</div>
+          <div class="mini"><strong>Nivel medio:</strong><br>Emparejar, ordenar, arrastrar/soltar, ruleta, candados, narrativa ramificada.</div>
+          <div class="mini"><strong>Más avanzado:</strong><br>Sopas de letras complejas, crucigramas automáticos, escape rooms grandes, mapas con progreso y sistemas tipo RPG.</div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="footer-note">
+    Este catálogo fue hecho como demo de posibilidades. La estética, dificultad, retroalimentación, puntajes, sonidos, temporizadores y narrativa pueden personalizarse totalmente para tu curso.
   </div>
-</div>
 
-<script>
-function cambiar(id){
-  document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('activa'));
-  document.getElementById(id).classList.add('activa');
-}
 
-function abrir(num){
-  let url = "";
-  let link = "";
+  <div class="modal-backdrop" id="resourceModal" onclick="closeResourceModal(event)">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Recurso</div>
+        <button class="ghost" onclick="forceCloseResourceModal()">Cerrar</button>
+      </div>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
 
-  if(num === 1){
-    url = "https://www.youtube.com/embed/IYyUAqowDrU?autoplay=1";
-    link = "https://www.youtube.com/watch?v=IYyUAqowDrU";
-  } else {
-    url = "https://www.youtube.com/embed/6Clj2hCFYOM?autoplay=1";
-    link = "https://www.youtube.com/watch?v=6Clj2hCFYOM";
-  }
+  <script>
+    function setFeedback(id, text, type='good'){
+      const el = document.getElementById(id);
+      el.textContent = text;
+      el.className = 'feedback ' + type;
+    }
 
-  document.getElementById("frame").src = url;
-  document.getElementById("linkYT").href = link;
-  document.getElementById("modal").classList.add("activo");
-}
+    function openResourceModal(title, type, url){
+      const modal = document.getElementById('resourceModal');
+      const titleEl = document.getElementById('modalTitle');
+      const content = document.getElementById('modalContent');
+      titleEl.textContent = title;
+      content.innerHTML = '';
+      if(type === 'image'){
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = title;
+        content.appendChild(img);
+      } else {
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        content.appendChild(iframe);
+      }
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
-function cerrar(){
-  document.getElementById("frame").src = "";
-  document.getElementById("modal").classList.remove("activo");
-}
-</script>
+    function forceCloseResourceModal(){
+      const modal = document.getElementById('resourceModal');
+      const content = document.getElementById('modalContent');
+      modal.classList.remove('active');
+      content.innerHTML = '';
+      document.body.style.overflow = '';
+    }
 
+    function closeResourceModal(event){
+      if(event.target.id === 'resourceModal') forceCloseResourceModal();
+    }
+
+    function checkMcq(){
+      const selected = document.querySelector('input[name="mcq"]:checked');
+      if(!selected) return setFeedback('mcqFeedback','Debes seleccionar una opción.','warn');
+      if(selected.value === 'mamifero') setFeedback('mcqFeedback','¡Correcto! El delfín es un mamífero marino.','good');
+      else setFeedback('mcqFeedback','No esta vez. Tiburón es pez y pingüino es ave.','bad');
+    }
+
+    function checkVF(value){
+      if(value) setFeedback('vfFeedback','Correcto. Los murciélagos sí son mamíferos.','good');
+      else setFeedback('vfFeedback','Incorrecto. Aunque vuelan, siguen siendo mamíferos.','bad');
+    }
+
+    function checkCheckbox(){
+      const vals = [...document.querySelectorAll('#checkbox input[type="checkbox"]:checked')].map(el => el.value).sort();
+      const ok = ['leche','pelaje','sangre'].sort();
+      if(JSON.stringify(vals)===JSON.stringify(ok)) setFeedback('checkboxFeedback','Muy bien. Marcaste todas las características correctas.','good');
+      else setFeedback('checkboxFeedback','Casi. La idea correcta era pelo/pelaje, leche y sangre caliente.','bad');
+    }
+
+    function checkFill(){
+      const v = document.getElementById('fillInput').value.trim().toLowerCase();
+      if(['leche','la leche'].includes(v)) setFeedback('fillFeedback','Excelente. Esa era la palabra clave.','good');
+      else setFeedback('fillFeedback','Todavía no. La respuesta esperada era “leche”.','bad');
+    }
+
+    function checkShort(){
+      const v = document.getElementById('shortInput').value.trim().toLowerCase();
+      if(v.includes('ballena azul')) setFeedback('shortFeedback','Correcto. La ballena azul es el mamífero más grande del planeta.','good');
+      else setFeedback('shortFeedback','Respuesta no reconocida. Prueba con el nombre común completo.','warn');
+    }
+
+    function checkLikert(){
+      const l1 = document.querySelector('input[name="l1"]:checked');
+      const l2 = document.querySelector('input[name="l2"]:checked');
+      if(!l1 || !l2) return setFeedback('likertFeedback','Marca una puntuación en ambas afirmaciones.','warn');
+      const avg = ((Number(l1.value)+Number(l2.value))/2).toFixed(1);
+      let msg = 'Promedio de autoevaluación: ' + avg + '/5.';
+      if(avg >= 4) msg += ' Se percibe una comprensión alta.';
+      else if(avg >= 3) msg += ' Hay una base buena, pero aún puede profundizarse.';
+      else msg += ' Conviene reforzar el contenido con más práctica.';
+      setFeedback('likertFeedback', msg, avg >= 4 ? 'good' : avg >= 3 ? 'warn' : 'bad');
+    }
+
+    const flashcards = [
+      {q:'¿Qué caracteriza a los mamíferos?', a:'Tienen pelo o pelaje y alimentan a sus crías con leche.'},
+      {q:'¿Qué mamífero puede volar?', a:'El murciélago.'},
+      {q:'¿Qué mamífero vive en el mar?', a:'La ballena, el delfín o la foca.'}
+    ];
+    let flashIndex = 0, flashFace = 'q';
+    function renderFlashcard(){
+      document.getElementById('flashcard').textContent = flashcards[flashIndex][flashFace];
+    }
+    function flipFlashcard(){
+      flashFace = flashFace === 'q' ? 'a' : 'q';
+      renderFlashcard();
+    }
+    function nextFlashcard(){
+      flashIndex = (flashIndex + 1) % flashcards.length;
+      flashFace = 'q';
+      renderFlashcard();
+    }
+    renderFlashcard();
+
+    const memorySymbolsBase = ['🐶','🐱','🐘','🐬'];
+    let memoryCards = [];
+    let flipped = [];
+    let matched = 0;
+    function resetMemory(){
+      const symbols = [...memorySymbolsBase, ...memorySymbolsBase].sort(() => Math.random() - 0.5);
+      memoryCards = symbols.map((s,i) => ({id:i, symbol:s, flipped:false, matched:false}));
+      flipped = [];
+      matched = 0;
+      drawMemory();
+      setFeedback('memoryFeedback','Encuentra las parejas.','warn');
+    }
+    function drawMemory(){
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+      memoryCards.forEach(card => {
+        const div = document.createElement('div');
+        div.className = 'memory-card' + (card.flipped ? ' flipped' : '') + (card.matched ? ' matched' : '');
+        div.textContent = (card.flipped || card.matched) ? card.symbol : '❔';
+        div.onclick = () => flipMemory(card.id);
+        grid.appendChild(div);
+      });
+    }
+    function flipMemory(id){
+      const card = memoryCards[id];
+      if(card.flipped || card.matched || flipped.length===2) return;
+      card.flipped = true;
+      flipped.push(card);
+      drawMemory();
+      if(flipped.length===2){
+        if(flipped[0].symbol === flipped[1].symbol){
+          flipped[0].matched = true; flipped[1].matched = true;
+          matched += 1;
+          flipped = [];
+          if(matched === memorySymbolsBase.length) setFeedback('memoryFeedback','¡Muy bien! Encontraste todas las parejas.','good');
+        } else {
+          setTimeout(() => {
+            flipped.forEach(c => c.flipped = false);
+            flipped = [];
+            drawMemory();
+          }, 700);
+        }
+      }
+    }
+    resetMemory();
+
+    const hangmanAnswer = 'ELEFANTE';
+    let hangmanState = {used:[], lives:6};
+    function renderHangman(){
+      document.getElementById('hangmanWord').textContent = hangmanAnswer.split('').map(l => hangmanState.used.includes(l) ? l : '_').join(' ');
+      document.getElementById('hangmanLives').textContent = hangmanState.lives;
+      document.getElementById('hangmanUsed').textContent = 'Letras usadas: ' + (hangmanState.used.join(', ') || 'ninguna');
+      const solved = hangmanAnswer.split('').every(l => hangmanState.used.includes(l));
+      if(solved) setFeedback('hangmanFeedback','¡Ganaste! La palabra era ELEFANTE.','good');
+      else if(hangmanState.lives <= 0) setFeedback('hangmanFeedback','Se acabaron los intentos. La palabra era ELEFANTE.','bad');
+    }
+    function guessLetter(){
+      const input = document.getElementById('hangmanInput');
+      const letter = input.value.toUpperCase().trim();
+      input.value='';
+      if(!letter || !/[A-ZÁÉÍÓÚÑ]/.test(letter)) return setFeedback('hangmanFeedback','Escribe solo una letra.','warn');
+      if(hangmanState.used.includes(letter)) return setFeedback('hangmanFeedback','Esa letra ya fue usada.','warn');
+      hangmanState.used.push(letter);
+      if(!hangmanAnswer.includes(letter)) hangmanState.lives--;
+      renderHangman();
+    }
+    function resetHangman(){
+      hangmanState = {used:[], lives:6};
+      setFeedback('hangmanFeedback','Nuevo intento iniciado.','warn');
+      renderHangman();
+    }
+    resetHangman();
+
+    function checkMatching(){
+      const selects = [...document.querySelectorAll('#matching select')];
+      const ok = selects.every(s => s.value && s.value === s.dataset.answer);
+      if(ok) setFeedback('matchingFeedback','Excelente. Todas las parejas son correctas.','good');
+      else setFeedback('matchingFeedback','Hay una o más asociaciones incorrectas.','bad');
+    }
+
+    const correctOrder = ['Nace','Se alimenta','Crece','Se reproduce'];
+    let orderItems = [];
+    function shuffleOrder(){
+      orderItems = [...correctOrder].sort(() => Math.random() - 0.5);
+      renderOrder();
+      setFeedback('orderFeedback','Usa las flechas para reorganizar.','warn');
+    }
+    function renderOrder(){
+      const list = document.getElementById('orderList');
+      list.innerHTML = '';
+      orderItems.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'order-item';
+        li.innerHTML = `<span>${index+1}. ${item}</span>
+          <span>
+            <button class="ghost" onclick="moveOrder(${index}, -1)">↑</button>
+            <button class="ghost" onclick="moveOrder(${index}, 1)">↓</button>
+          </span>`;
+        list.appendChild(li);
+      });
+    }
+    function moveOrder(index, direction){
+      const newIndex = index + direction;
+      if(newIndex < 0 || newIndex >= orderItems.length) return;
+      [orderItems[index], orderItems[newIndex]] = [orderItems[newIndex], orderItems[index]];
+      renderOrder();
+    }
+    function checkOrder(){
+      const ok = JSON.stringify(orderItems) === JSON.stringify(correctOrder);
+      if(ok) setFeedback('orderFeedback','Perfecto. La secuencia está correcta.','good');
+      else setFeedback('orderFeedback','Aún no. Sigue probando el orden lógico.','bad');
+    }
+    shuffleOrder();
+
+    let draggedEl = null;
+    function initDragDrop(){
+      document.querySelectorAll('.drag-item').forEach(item => {
+        item.addEventListener('dragstart', e => { draggedEl = item; });
+      });
+      document.querySelectorAll('.dropzone').forEach(zone => {
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+        zone.addEventListener('drop', e => {
+          e.preventDefault(); zone.classList.remove('over');
+          if(draggedEl) zone.querySelector('.dropped').appendChild(draggedEl);
+        });
+      });
+    }
+    function checkDragDrop(){
+      const items = [...document.querySelectorAll('.drag-item')];
+      if(items.some(i => !i.parentElement.classList.contains('dropped'))) return setFeedback('dragDropFeedback','Aún quedan elementos sin clasificar.','warn');
+      const ok = items.every(item => item.parentElement.parentElement.dataset.accept === item.dataset.type);
+      if(ok) setFeedback('dragDropFeedback','Clasificación correcta.','good');
+      else setFeedback('dragDropFeedback','Hay uno o más elementos en la categoría equivocada.','bad');
+    }
+    function resetDragDrop(){
+      const container = document.querySelector('#dragdrop .draggables');
+      document.querySelectorAll('#dragdrop .drag-item').forEach(item => container.appendChild(item));
+      setFeedback('dragDropFeedback','Elementos reiniciados.','warn');
+    }
+    initDragDrop();
+
+    const wordGrid = [
+      ['O','S','O','Q','T','M','R','A'],
+      ['X','B','A','L','F','O','C','A'],
+      ['P','Q','G','A','T','O','Y','L'],
+      ['M','Z','N','D','W','R','I','S'],
+      ['U','H','J','K','L','M','N','O'],
+      ['C','A','R','P','I','N','C','H'],
+      ['V','E','N','A','D','O','S','P'],
+      ['R','U','M','I','A','N','T','E']
+    ];
+    const validWords = [
+      [[0,0],[0,1],[0,2]],      // OSO
+      [[2,2],[2,3],[2,4],[2,5]],// GATO
+      [[1,4],[1,5],[1,6],[1,7]] // FOCA
+    ];
+    let selectedCells = [];
+    let foundWords = 0;
+    function drawWordsearch(){
+      const grid = document.getElementById('wordsearchGrid');
+      grid.innerHTML = '';
+      wordGrid.forEach((row,r) => row.forEach((letter,c) => {
+        const div = document.createElement('div');
+        div.className = 'cell';
+        div.dataset.r = r; div.dataset.c = c;
+        div.textContent = letter;
+        div.onclick = () => toggleCell(div, r, c);
+        grid.appendChild(div);
+      }));
+    }
+    function toggleCell(div,r,c){
+      const key = `${r}-${c}`;
+      const idx = selectedCells.findIndex(x => x.key === key);
+      if(idx >= 0){
+        selectedCells.splice(idx,1);
+        div.classList.remove('selected');
+      } else {
+        selectedCells.push({key,r,c});
+        div.classList.add('selected');
+      }
+    }
+    function submitWordSelection(){
+      const coords = selectedCells.map(x => [x.r, x.c]).sort().map(JSON.stringify);
+      const matchIndex = validWords.findIndex(word => JSON.stringify(word.map(JSON.stringify).sort()) === JSON.stringify(coords));
+      if(matchIndex >= 0){
+        selectedCells.forEach(cell => {
+          const el = document.querySelector(`.cell[data-r="${cell.r}"][data-c="${cell.c}"]`);
+          el.classList.remove('selected');
+          el.classList.add('found');
+          el.onclick = null;
+        });
+        selectedCells = [];
+        foundWords++;
+        if(foundWords === 3) setFeedback('wordsearchFeedback','¡Excelente! Encontraste todas las palabras.','good');
+        else setFeedback('wordsearchFeedback','¡Palabra encontrada! Sigue buscando las demás.','good');
+      } else {
+        setFeedback('wordsearchFeedback','La selección actual no coincide con una palabra válida del juego.','bad');
+      }
+    }
+    function clearWordSelection(){
+      selectedCells = [];
+      document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+      setFeedback('wordsearchFeedback','Selección borrada.','warn');
+    }
+    drawWordsearch();
+
+    function checkCrossword(){
+      const answers = {
+        g1:'G', g2:'A', g3:'T', g4:'O',
+        f1:'F', f2:'O', f3:'C', f4:'A'
+      };
+      const ok = Object.entries(answers).every(([key,val]) => {
+        const input = document.querySelector(`[data-key="${key}"]`);
+        return input && input.value.toUpperCase() === val;
+      });
+      if(ok) setFeedback('crosswordFeedback','¡Muy bien! Mini crucigrama resuelto.','good');
+      else setFeedback('crosswordFeedback','Aún hay letras incorrectas o faltantes.','bad');
+    }
+
+    const rouletteOptions = [
+      'Nombra 3 mamíferos',
+      'Imita un animal',
+      'Haz una pregunta',
+      'Ganas un punto bonus'
+    ];
+    function spinRoulette(){
+      const wheel = document.getElementById('rouletteWheel');
+      wheel.style.transform = `rotate(${Math.floor(Math.random()*1440)+720}deg)`;
+      setTimeout(() => {
+        const chosen = rouletteOptions[Math.floor(Math.random()*rouletteOptions.length)];
+        setFeedback('rouletteFeedback','Resultado: ' + chosen,'good');
+      }, 500);
+    }
+
+    let scenarioStage = 'start';
+    function chooseScenario(choice){
+      const text = document.getElementById('scenarioText');
+      const choices = document.getElementById('scenarioChoices');
+      if(scenarioStage === 'start'){
+        if(choice === 'fur'){
+          text.textContent = 'Encuentras pelo adherido a una rama. Eso te indica que probablemente buscas un mamífero. Ves dos rutas.';
+          choices.innerHTML = '<button onclick="chooseScenario(\'cave\')">Seguir huellas hacia una cueva</button><button class="ghost" onclick="chooseScenario(\'tree\')">Buscar en la copa de los árboles</button>';
+          setFeedback('scenarioFeedback','Elegiste una pista muy útil.','good');
+        } else {
+          text.textContent = 'El río ayuda, pero no te entrega una pista concluyente. Aún podrías corregir tu estrategia.';
+          choices.innerHTML = '<button onclick="chooseScenario(\'fur\')">Ahora sí revisar rastros de pelo</button>';
+          setFeedback('scenarioFeedback','No fue mala idea, pero la evidencia aún es débil.','warn');
+        }
+        scenarioStage = 'middle';
+      } else {
+        if(choice === 'tree'){
+          text.textContent = 'En los árboles encuentras un murciélago descansando. ¡Descubriste un mamífero volador!';
+          choices.innerHTML = '<button class="ghost" onclick="resetScenario()">Reiniciar historia</button>';
+          setFeedback('scenarioFeedback','Final exitoso: elegiste la ruta correcta según la pista.','good');
+        } else if(choice === 'cave'){
+          text.textContent = 'En la cueva no había peligro, pero las huellas pertenecían a otro animal. Necesitas otra ruta.';
+          choices.innerHTML = '<button onclick="chooseScenario(\'tree\')">Ir a los árboles</button>';
+          setFeedback('scenarioFeedback','Ruta interesante, pero no era la mejor.','warn');
+        }
+      }
+    }
+    function resetScenario(){
+      scenarioStage = 'start';
+      document.getElementById('scenarioText').textContent = 'Eres explorador/a. Encuentras huellas cerca de un río. ¿Qué haces primero?';
+      document.getElementById('scenarioChoices').innerHTML = '<button onclick="chooseScenario(\'water\')">Buscar si el animal vive en el agua</button><button class="ghost" onclick="chooseScenario(\'fur\')">Examinar si dejó pelo o pelaje</button>';
+      setFeedback('scenarioFeedback','Historia reiniciada.','warn');
+    }
+
+    function checkLock(){
+      const code = document.getElementById('lockInput').value.trim().toUpperCase();
+      if(code === 'DEG') setFeedback('lockFeedback','Código válido. Has desbloqueado la siguiente sala.','good');
+      else setFeedback('lockFeedback','Código incorrecto. Pista: Delfín, Elefante, Gato.','bad');
+    }
+  </script>
 </body>
 </html>
